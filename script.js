@@ -12,3 +12,28 @@ const newArtworks = [
     { title: 'Starry Night Over the Rhône', artist: 'Vincent van Gogh', img: 'https://via.placeholder.com/200' }
 ];
 
+var panels = document.getElementsByClassName("art-panel")
+var selected = null
+var viewed = []
+const counterDiv = document.getElementById("counter");
+
+function updateCounter() {
+    counterDiv.innerText = `Artworks Viewed: ${viewed.length}`;
+}
+
+for(let i = 0; i < panels.length; i++) {
+    panels[i].onclick = function() {
+        // if(selected != null) {
+        //     panels[selected].style.background = "#eee"
+        // }
+        // if(selected != i) {
+        //     panels[i].style.background = "orange"
+        //     selected = i
+        // }
+        panels[i].style.background = "orange"
+        if (!viewed.includes(i)) {
+            viewed.push(i);
+            updateCounter()
+        }
+    }
+}
