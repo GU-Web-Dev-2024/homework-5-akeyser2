@@ -18,10 +18,11 @@ const newArtworks = [
 const counterDiv = document.getElementById("counter");
 const resetButton = document.getElementById("reset-button");
 const newArtButton = document.getElementById("add-art-button")
+const removeViewButton = document.getElementById("remove-view-button")
 const container = document.getElementsByClassName("art-grid")[0]
 var panels = document.getElementsByClassName("art-panel");
-var selected = null;
 var viewed = [];
+var removing = false;
 
 function updateCounter() {
     counterDiv.innerText = `Artworks Viewed: ${viewed.length}`;
@@ -36,19 +37,35 @@ resetButton.onclick = function() {
     }
 }
 
+// EXTRA CREDIT TOGGLE
+removeViewButton.onclick = function() {
+    if(removing) {
+        removeViewButton.style.backgroundColor = '#333'
+        removing = false;
+    }
+    else {
+        removeViewButton.style.backgroundColor = 'red'
+        removing = true;
+    }
+}
+
 for(let i = 0; i < panels.length; i++) {
     panels[i].onclick = function() {
-        // if(selected != null) {
-        //     panels[selected].style.background = "#eee"
-        // }
-        // if(selected != i) {
-        //     panels[i].style.background = "orange"
-        //     selected = i
-        // }
-        panels[i].style.background = "orange"
-        if (!viewed.includes(i)) {
-            viewed.push(i);
-            updateCounter();
+        // EXTRA CREDIT TOGGLE
+        if(removing) {
+            panels[i].style.background = "#eee"
+            if (viewed.includes(i)) {
+                const index = viewed.indexOf(i);
+                const x = viewed.splice(index, 1);
+                updateCounter();
+            }
+        }
+        else {
+            panels[i].style.background = "orange"
+            if (!viewed.includes(i)) {
+                viewed.push(i);
+                updateCounter();
+            }
         }
     }
 }
@@ -63,10 +80,21 @@ newArtButton.onclick = function() {
         <p>${artwork.title} by ${artwork.artist}</p>
     `;
     artDiv.onclick = function() {
-        artDiv.style.background = "orange"
-        if (!viewed.includes(artDiv)) {
-            viewed.push(artDiv);
-            updateCounter();
+        // EXTRA CREDIT TOGGLE
+        if(removing) {
+            artDiv.style.background = "#eee"
+            if (viewed.includes(artDiv)) {
+                const index = viewed.indexOf(artDiv);
+                const x = viewed.splice(index, 1);
+                updateCounter();
+            }
+        }
+        else {
+            artDiv.style.background = "orange"
+            if (!viewed.includes(artDiv)) {
+                viewed.push(artDiv);
+                updateCounter();
+            }
         }
     }
     container.appendChild(artDiv);
