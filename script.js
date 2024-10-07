@@ -1,19 +1,24 @@
 // List of additional artworks to add dynamically
 const newArtworks = [
-    { title: 'The Scream', artist: 'Edvard Munch', img: 'https://via.placeholder.com/200' },
-    { title: 'Girl with a Pearl Earring', artist: 'Johannes Vermeer', img: 'https://via.placeholder.com/200' },
-    { title: 'The Birth of Venus', artist: 'Sandro Botticelli', img: 'https://via.placeholder.com/200' },
-    { title: 'The Night Watch', artist: 'Rembrandt van Rijn', img: 'https://via.placeholder.com/200' },
-    { title: 'The Kiss', artist: 'Gustav Klimt', img: 'https://via.placeholder.com/200' },
-    { title: 'American Gothic', artist: 'Grant Wood', img: 'https://via.placeholder.com/200' },
-    { title: 'Las Meninas', artist: 'Diego Velázquez', img: 'https://via.placeholder.com/200' },
-    { title: 'The Last Supper', artist: 'Leonardo da Vinci', img: 'https://via.placeholder.com/200' },
-    { title: 'Water Lilies', artist: 'Claude Monet', img: 'https://via.placeholder.com/200' },
-    { title: 'Starry Night Over the Rhône', artist: 'Vincent van Gogh', img: 'https://via.placeholder.com/200' }
+    { title: 'Target Successfully Bombed', artist: 'Kristoffer Zetterstrand', img: 'res/img4.webp' },
+    { title: 'Kbab med tre pepperoni', artist: 'Kristoffer Zetterstrand', img: 'res/img5.webp' },
+    { title: 'Paradistrad', artist: 'Kristoffer Zetterstrand', img: 'res/img6.webp' },
+    { title: 'Wasteland', artist: 'Kristoffer Zetterstrand', img: 'res/img7.webp' },
+    { title: 'Bust', artist: 'Kristoffer Zetterstrand', img: 'res/img8.webp' },
+    { title: 'Match', artist: 'Kristoffer Zetterstrand', img: 'res/img9.webp' },
+    { title: 'Skull and Roses', artist: 'Kristoffer Zetterstrand', img: 'res/img10.webp' },
+    { title: 'The Stage is Set', artist: 'Kristoffer Zetterstrand', img: 'res/img11.webp' },
+    { title: 'The void', artist: 'Kristoffer Zetterstrand', img: 'res/img12.webp' },
+    { title: 'Wither', artist: 'Kristoffer Zetterstrand', img: 'res/img13.webp' },
+    { title: 'Skull on Fire', artist: 'Kristoffer Zetterstrand', img: 'res/img14.webp' },
+    { title: 'Pigscene', artist: 'Kristoffer Zetterstrand', img: 'res/img15.webp' },
+    { title: 'Pointer', artist: 'Kristoffer Zetterstrand', img: 'res/img16.webp' }
 ];
 
 const counterDiv = document.getElementById("counter");
 const resetButton = document.getElementById("reset-button");
+const newArtButton = document.getElementById("add-art-button")
+const container = document.getElementsByClassName("art-grid")[0]
 var panels = document.getElementsByClassName("art-panel");
 var selected = null;
 var viewed = [];
@@ -25,6 +30,7 @@ function updateCounter() {
 resetButton.onclick = function() {
     viewed = [];
     updateCounter();
+    panels = document.getElementsByClassName("art-panel");
     for(let i = 0; i < panels.length; i++) {
         panels[i].style.background = "#eee"
     }
@@ -47,4 +53,21 @@ for(let i = 0; i < panels.length; i++) {
     }
 }
 
-
+newArtButton.onclick = function() {
+    var newIndex = Math.floor(Math.random() * newArtworks.length);
+    const artwork = newArtworks[newIndex];
+    const artDiv = document.createElement('div');
+    artDiv.className = 'art-panel';
+    artDiv.innerHTML = `
+        <img src="${artwork.img}" alt="${artwork.title}">
+        <p>${artwork.title} by ${artwork.artist}</p>
+    `;
+    artDiv.onclick = function() {
+        artDiv.style.background = "orange"
+        if (!viewed.includes(artDiv)) {
+            viewed.push(artDiv);
+            updateCounter();
+        }
+    }
+    container.appendChild(artDiv);
+}
